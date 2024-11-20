@@ -1,5 +1,5 @@
 const express = require('express');
-
+var cors = require('cors')
 class Server {
 
     constructor(){
@@ -17,6 +17,8 @@ class Server {
 
         //Public directory
         this.app.use(express.static('public'));
+
+        this.app.use(cors());
 
     }
 
