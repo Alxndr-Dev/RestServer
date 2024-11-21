@@ -1,11 +1,21 @@
 
+// Rest API - Controller
+//GetUsers
 const getUsers = (req, res) => {
 
+    const { q, nombre = 'No name', apikey, page = '1', limit } = req.query;
+
     res.json({
-        msg: 'get API - controller'
+        msg: 'get API - controller',
+        q,
+        nombre,
+        apikey,
+        page,
+        limit
     });
 }
 
+//PostUsers
 const postUsers = (req, res) => {
 
     // const body = req.body;
@@ -18,13 +28,18 @@ const postUsers = (req, res) => {
     });
 }
 
+//PutUsers
 const putUsers = (req, res) => {
 
-    res.status(500).json({
-        msg: 'put API - controller'
+    const id = req.params.id;
+
+    res.status(200).json({
+        msg: 'put API - controller',
+        id
     });
 }
 
+//PatchUsers
 const patchUsers = (req, res) => {
     
     res.json({
@@ -32,6 +47,7 @@ const patchUsers = (req, res) => {
     });
 }
 
+//DeleteUsers
 const deleteUsers = (req, res) => {
 
     res.json({
@@ -39,6 +55,7 @@ const deleteUsers = (req, res) => {
     });
 }
 
+//Exports
 module.exports = {
     getUsers,
     postUsers,

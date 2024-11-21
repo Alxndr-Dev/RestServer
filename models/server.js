@@ -27,12 +27,15 @@ class Server {
 
     }
 
+    //Routes
     routes(){
         
+        //User routes
         this.app.use(this.userPath, require('../routes/user.routes'));
 
     }
 
+    //Listen
     listen(){
         this.app.listen(this.port, ()=>{
             console.log(`Server running on port ${this.port}`)
