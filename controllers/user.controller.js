@@ -8,8 +8,13 @@ const getUsers = (req, res) => {
 
 const postUsers = (req, res) => {
 
+    // const body = req.body;
+    const {name, age} = req.body;
+
     res.status(201).json({
-        msg: 'post API - controller'
+        msg: 'post API - controller',
+        name, 
+        age
     });
 }
 
@@ -28,7 +33,7 @@ const patchUsers = (req, res) => {
 }
 
 const deleteUsers = (req, res) => {
-    
+
     res.json({
         msg: 'delete API - controller'
     });

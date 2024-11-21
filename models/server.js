@@ -19,7 +19,11 @@ class Server {
         //Public directory
         this.app.use(express.static('public'));
 
+        //CORS
         this.app.use(cors());
+
+        //Body parse
+        this.app.use(express.json());
 
     }
 
