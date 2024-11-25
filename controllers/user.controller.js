@@ -1,3 +1,5 @@
+const User = require('../models/user')
+
 
 // Rest API - Controller
 //GetUsers
@@ -16,15 +18,16 @@ const getUsers = (req, res) => {
 }
 
 //PostUsers
-const postUsers = (req, res) => {
+const postUsers = async (req, res) => {
 
-    // const body = req.body;
-    const {name, age} = req.body;
+
+    const body = req.body;
+    const user = new User(body);
+
+    await user.save();
 
     res.status(201).json({
-        msg: 'post API - controller',
-        name, 
-        age
+        user
     });
 }
 
