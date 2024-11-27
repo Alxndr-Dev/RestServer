@@ -1,4 +1,7 @@
-const User = require('../models/user')
+const bcrypt = require('bcryptjs');
+
+
+const User = require('../models/user');
 
 
 // Rest API - Controller
@@ -20,9 +23,19 @@ const getUsers = (req, res) => {
 //PostUsers
 const postUsers = async (req, res) => {
 
+    //Getting the body
+    const {nombre, correo, password, role} = req.body;
+    const user = new User({nombre, correo, password, role});
 
-    const body = req.body;
-    const user = new User(body);
+    //verifying if the email exists
+
+    //Encrypting the password
+
+    const salt = bcrypt.genSaltSync();
+
+    user.password = bcrypt.hashSync(password,salt);
+
+    //Saving the user
 
     await user.save();
 
