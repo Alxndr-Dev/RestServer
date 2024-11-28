@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 
 
 const User = require('../models/user');
+const { validationResult } = require('express-validator');
 
 
 // Rest API - Controller
@@ -23,11 +24,24 @@ const getUsers = (req, res) => {
 //PostUsers
 const postUsers = async (req, res) => {
 
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json(errors);
+    }
+
     //Getting the body
     const {nombre, correo, password, role} = req.body;
     const user = new User({nombre, correo, password, role});
 
     //verifying if the email exists
+
+    const existeEmail = await User.findOne({correo});
+    if (existeEmail){
+        return res.status(400).json({
+            msg: 'The email already exists'
+        })
+    }
 
     //Encrypting the password
 
