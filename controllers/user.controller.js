@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 
 
 const User = require('../models/user');
-const { validationResult } = require('express-validator');
 
 
 // Rest API - Controller
@@ -25,10 +24,6 @@ const getUsers = (req, res) => {
 const postUsers = async (req, res) => {
 
 
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json(errors);
-    }
 
     //Getting the body
     const {nombre, correo, password, role} = req.body;
