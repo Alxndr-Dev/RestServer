@@ -1,7 +1,9 @@
 
-
+//Import the required modules and create a new schema for the user model. The schema will have the following fields:
+//Schema and model from mongoose
 const {Schema, model} = require('mongoose');
 
+//User schema with the required fields
 const UserSchema = Schema({
 
     nombre: {
@@ -36,5 +38,5 @@ const UserSchema = Schema({
 
 })
 
-
+//Export the user model with the schema
 module.exports = model('User', UserSchema);

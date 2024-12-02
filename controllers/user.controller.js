@@ -1,6 +1,6 @@
+//Import Bcrypt for encrypt passwords
 const bcrypt = require('bcryptjs');
-
-
+//Imports User model
 const User = require('../models/user');
 
 
@@ -27,10 +27,11 @@ const postUsers = async (req, res) => {
 
     //Getting the body
     const {nombre, correo, password, role} = req.body;
+    //New User
     const user = new User({nombre, correo, password, role});
 
     //verifying if the email exists
-
+    //Search email
     const existeEmail = await User.findOne({correo});
     if (existeEmail){
         return res.status(400).json({
@@ -39,15 +40,11 @@ const postUsers = async (req, res) => {
     }
 
     //Encrypting the password
-
     const salt = bcrypt.genSaltSync();
-
     user.password = bcrypt.hashSync(password,salt);
 
     //Saving the user
-
     await user.save();
-
     res.status(201).json({
         user
     });
