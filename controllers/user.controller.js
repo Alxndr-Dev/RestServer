@@ -45,6 +45,7 @@ const postUsers = async (req, res) => {
 
     //Saving the user
     await user.save();
+    
     res.status(201).json({
         user
     });

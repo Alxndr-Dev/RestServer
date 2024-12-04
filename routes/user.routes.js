@@ -12,9 +12,9 @@ const {getUsers,
 
 //Middlewares
 const { validarCampos } = require('../middlewares/validar-campos');
+const { esRolValido } = require('../helpers/db-validators');
 
-//Models
-const Role = require('../models/role');
+
 
 //ROUTES
 
@@ -38,14 +38,7 @@ router.post('/', [
     //Custom validation
     //This is a custom validation that checks if the role is valid
     //In this case we retrieve the role from the request body
-    check('role').custom( async (role = '') =>{
-        //We check if the role exist in the roles in the db
-        const existeRol = await Role.findOne({role});
-        //If not exist, throw the error
-        if(!existeRol){
-            throw new Error(`El rol ${role} no esta registrado en la Base de datos`);
-        }
-    }),
+    check('role').custom( esRolValido ),
     validarCampos
 ] ,postUsers);
 
