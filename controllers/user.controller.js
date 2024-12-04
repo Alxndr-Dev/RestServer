@@ -23,21 +23,10 @@ const getUsers = (req, res) => {
 //PostUsers
 const postUsers = async (req, res) => {
 
-
-
     //Getting the body
     const {nombre, correo, password, role} = req.body;
     //New User
     const user = new User({nombre, correo, password, role});
-
-    //verifying if the email exists
-    //Search email
-    const existeEmail = await User.findOne({correo});
-    if (existeEmail){
-        return res.status(400).json({
-            msg: 'The email already exists'
-        })
-    }
 
     //Encrypting the password
     const salt = bcrypt.genSaltSync();
@@ -45,7 +34,7 @@ const postUsers = async (req, res) => {
 
     //Saving the user
     await user.save();
-    
+
     res.status(201).json({
         user
     });

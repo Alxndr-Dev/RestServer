@@ -12,7 +12,7 @@ const {getUsers,
 
 //Middlewares
 const { validarCampos } = require('../middlewares/validar-campos');
-const { esRolValido } = require('../helpers/db-validators');
+const { esRolValido, existeEmail } = require('../helpers/db-validators');
 
 
 
@@ -30,6 +30,7 @@ router.post('/', [
     //The second parameter is the error message
     //The third parameter is the validation
     check('correo', 'El correo no es valido').isEmail(),
+    check('correo').custom( existeEmail ),
     //The not().isEmpty() method is used to check if the field is empty or not
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     //The isLength() method is used to check the length of the field
