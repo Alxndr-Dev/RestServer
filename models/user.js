@@ -36,7 +36,12 @@ const UserSchema = Schema({
         default: false
     }
 
-})
+});
+
+UserSchema.methods.toJSON = function(){
+    const {__v, password, ...user} = this.toObject();
+    return user;
+}
 
 //Export the user model with the schema
 module.exports = model('User', UserSchema);
