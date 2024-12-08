@@ -8,9 +8,12 @@ const User = require('../models/user');
 //GetUsers
 const getUsers = async (req, res) => {
 
-    // const { q, nombre = 'No name', apikey, page = '1', limit } = req.query;
-
-    const users = await User.find();
+    //Query params
+    //We get the limit and from from the query
+    const { limit = 5, from = 0} = req.query
+    const users = await User.find() //We get all the users
+    .skip(Number(from)) //We skip the first 'from' users
+    .limit(Number(limit)); //We get the first 'limit' users
 
     res.json({
         users
