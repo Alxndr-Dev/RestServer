@@ -12,9 +12,7 @@ const {getUsers,
 
 //Middlewares
 const { validarCampos } = require('../middlewares/validar-campos');
-const { esRolValido, existeEmail } = require('../helpers/db-validators');
-
-
+const { esRolValido, existeEmail,  existeUsuarioPorId} = require('../helpers/db-validators');
 
 //ROUTES
 
@@ -43,7 +41,12 @@ router.post('/', [
     validarCampos
 ] ,postUsers);
 
-router.put('/:id', putUsers);
+router.put('/:id',[
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
+    check('role').custom( esRolValido ),
+    validarCampos
+], putUsers);
 
 router.patch('/', patchUsers);
 

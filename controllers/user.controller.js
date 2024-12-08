@@ -6,17 +6,14 @@ const User = require('../models/user');
 
 // Rest API - Controller
 //GetUsers
-const getUsers = (req, res) => {
+const getUsers = async (req, res) => {
 
-    const { q, nombre = 'No name', apikey, page = '1', limit } = req.query;
+    // const { q, nombre = 'No name', apikey, page = '1', limit } = req.query;
+
+    const users = await User.find();
 
     res.json({
-        msg: 'get API - controller',
-        q,
-        nombre,
-        apikey,
-        page,
-        limit
+        users
     });
 }
 
@@ -44,7 +41,7 @@ const postUsers = async (req, res) => {
 const putUsers = async (req, res) => {
 
     const id = req.params.id;
-    const {password, google, correo, ...resto} = req.body;
+    const {_id, password, google, correo, ...resto} = req.body;
 
     //TODO: validate against database
     if( password ){
@@ -55,10 +52,7 @@ const putUsers = async (req, res) => {
 
     const usuario = await User.findByIdAndUpdate(id, resto);
 
-    res.status(200).json({
-        msg: 'put API - controller',
-        usuario
-    });
+    res.status(200).json( usuario );
 }
 
 //PatchUsers
