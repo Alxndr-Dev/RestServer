@@ -11,11 +11,17 @@ const getUsers = async (req, res) => {
     //Query params
     //We get the limit and from from the query
     const { limit = 5, from = 0} = req.query
-    const users = await User.find() //We get all the users
-    .skip(Number(from)) //We skip the first 'from' users
-    .limit(Number(limit)); //We get the first 'limit' users
+    const query = { estado: true };
+
+    const [total, users] = await Promise.all([
+        User.countDocuments(), //We get the total of users
+        User.find( query ) //We get all the users with estado true
+            .skip(Number(from)) //We skip the first 'from' users
+            .limit(Number(limit)) //We get the first 'limit' users
+    ]);
 
     res.json({
+        total,
         users
     });
 }
